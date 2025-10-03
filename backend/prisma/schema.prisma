@@ -15,4 +15,36 @@ model User {
   email     String
   username  String
   password  String 
+  reviews   Review[]
+  lists      List[]
+}
+
+model Movie {
+  id        Int        @id@default(autoincrement())
+  title     String
+  year      DateTime
+  reviews   Review[]
+  list      List[]    @relation('MoviesonList')
+}
+
+model Review {
+  id        Int        @default(autoincrement())
+  createdAt DateTime   @default(now())
+  content   String
+  ratings   Int
+  userId    Int
+  movieId   Int
+  user      User       @relation(fields: [userId], references: [id])
+  movie     Movie      @relation(fields: [userId], references: [id])
+  movie
+}
+
+model List {
+  id        Int         @default(autoincrement())
+  name      String
+  createdAt DateTime    @default(now())
+
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+  movies    Movie      @relation('MoviesonList')
 }
