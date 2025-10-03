@@ -8,43 +8,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id        Int        @id @default(autoincrement())
-  createdAt DateTime   @default(now())
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
   email     String
   username  String
   password  String 
   reviews   Review[]
-  lists      List[]
+  lists     List[]
 }
 
 model Movie {
-  id        Int        @id@default(autoincrement())
-  title     String
-  year      DateTime
-  reviews   Review[]
-  list      List[]    @relation('MoviesonList')
+  id      Int       @id @default(autoincrement())
+  title   String
+  year    DateTime
+  reviews Review[]
+  lists   List[]    @relation("MoviesOnList")
 }
 
 model Review {
-  id        Int        @default(autoincrement())
-  createdAt DateTime   @default(now())
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
   content   String
   ratings   Int
   userId    Int
   movieId   Int
-  user      User       @relation(fields: [userId], references: [id])
-  movie     Movie      @relation(fields: [userId], references: [id])
-  movie
+  user      User     @relation(fields: [userId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
 }
 
 model List {
-  id        Int         @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  createdAt DateTime    @default(now())
+  createdAt DateTime  @default(now())
 
   userId    Int
-  user      User       @relation(fields: [userId], references: [id])
-  movies    Movie      @relation('MoviesonList')
+  user      User      @relation(fields: [userId], references: [id])
+  movies    Movie[]   @relation("MoviesOnList")
 }
