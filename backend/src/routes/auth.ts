@@ -1,7 +1,7 @@
 import express from 'express'
 import z, { email } from 'zod'
 import bcrypt from "bcrypt"
-import { PrismaClient } from '../generated/prisma'
+import { PrismaClient } from "@prisma/client"
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../config'
 
